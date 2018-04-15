@@ -3,13 +3,17 @@
 #change working directory
 cd $HOME
 
-#add a user account for litecoind
-echo "Adding unprivileged user account for litecoind, building the needed folder structure and setting folder permissions"
+#add a user account for newyorkcoind
+echo "Adding unprivileged user account for newyorkcoind, building the needed folder structure and setting folder permissions"
 useradd -s /usr/sbin/nologin $LITECOIND_USER
 
 #install ufw firewall configuration package
 echo "Installing firewall configuration tool"
 apt-get install ufw -y
+
+#install upstart
+echo "Installing upstart"
+apt-get install upstart -y
 
 #allow needed firewall ports
 echo "Setting up firewall ports and enable firewall"
@@ -37,8 +41,8 @@ mkdir -v -p $LITECOIND_BIN_DIR
 chmod -R 0700 $LITECOIND_BIN_DIR
 chown -R $LITECOIND_USER:$LITECOIND_GROUP $LITECOIND_BIN_DIR
 
-#create litecoin.conf file
-echo "Creating the litecoin.conf file"
+#create newyorkcoin.conf file
+echo "Creating the newyorkcoin.conf file"
 echo "rpcuser=$RPC_USER" >> $LITECOIND_CONF_FILE
 echo "rpcpassword=$RPC_PASSWORD" >> $LITECOIND_CONF_FILE
 echo "rpcallowip=127.0.0.1" >> $LITECOIND_CONF_FILE
@@ -49,40 +53,33 @@ echo "maxconnections=$CON_TOTAL" >> $LITECOIND_CONF_FILE
 echo "addnode=$selectedarray_one" >> $LITECOIND_CONF_FILE
 echo "addnode=$selectedarray_two" >> $LITECOIND_CONF_FILE
 
-#setup dependencies
-echo "Installing dependencies required for building Litecoin"
-sudo apt-get install autoconf libtool libssl-dev libboost-all-dev libminiupnpc-dev -y
-sudo apt-get install qt4-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev -y
+#gets arch data
+if test $ARCH -eq "64"
+then
+LITECOIN_FILENAME=$LITECOIN_FILENAME_64
+LITECOIN_DL_URL=$LITECOIN_DL_URL_64
+LITECOIN_VER="$LITECOIN_VER_NO_BIT-linux64"
+else
+LITECOIN_FILENAME=$LITECOIN_FILENAME_32
+LITECOIN_DL_URL=$LITECOIN_DL_URL_32
+LITECOIN_VER="$LITECOIN_VER_NO_BIT-linux32"
+fi
 
-#setup berkleydb and other build dependencies
-echo "Setting up berkleydb"
-wget http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz
-tar -xzvf db-4.8.30.NC.tar.gz
-cd db-4.8.30.NC/build_unix; ../dist/configure --enable-cxx
-make -j2
-sudo make install
+#download, unpack and move the newyorkcoind binary
+echo "Downloading, unpacking and moving newyorkcoind to $LITECOIND_BIN_DIR"
+wget $LITECOIN_DL_URL -P $HOME
+tar -zxvf $HOME/$LITECOIN_FILENAME
+rm -f -v $HOME/$LITECOIN_FILENAME
+cp -f -v $HOME/$LITECOIN_VER_NO_BIT/bin/newyorkcoind $LITECOIND_BIN_DIR
+cp -f -v $HOME/$LITECOIN_VER_NO_BIT/bin/newyorkcoin-cli $LITECOIND_BIN_DIR
+rm -r -f -v $HOME/$LITECOIN_VER_NO_BIT
 
-#build litecoind
-echo "Building Litecoin"
-cd ..
-git clone https://github.com/litecoin-project/litecoin.git
-cd litecoin/
-./autogen.sh
-./configure CPPFLAGS="-I/usr/local/BerkeleyDB.4.8/include -O2" LDFLAGS="-L/usr/local/BerkeleyDB.4.8/lib"
-make -j2
-sudo make install
-
-#Move the already built litecoind binary
-echo "Moving litecoind to $LITECOIND_BIN_DIR"
-cp -f -v litecoind $LITECOIND_BIN_DIR
-cp -f -v litecoin-cli $LITECOIND_BIN_DIR
-
-#add litecoind to systemd so it starts on system boot
-echo "Adding Litecoind systemd script to make it start on system boot"
-wget --progress=bar:force $RASPBIAN_SYSTEMD_DL_URL -P $RASPBIAN_SYSTEMD_CONF_DIR
-chmod -R 0644 $RASPBIAN_SYSTEMD_CONF_DIR/$RASPBIAN_SYSTEMD_CONF_FILE
-chown -R root:root $RASPBIAN_SYSTEMD_CONF_DIR/$RASPBIAN_SYSTEMD_CONF_FILE
-systemctl enable litecoind.service #enable litecoind systemd config file
+#add newyorkcoind to upstart so it starts on system boot
+echo "Adding Litecoind upstart script to make it start on system boot"
+wget $UBUNTU_UPSTART_DL_URL -P $UBUNTU_UPSTART_CONF_DIR
+chmod -R 0644 $UBUNTU_UPSTART_CONF_DIR/$UBUNTU_UPSTART_CONF_FILE
+chown -R root:root $UBUNTU_UPSTART_CONF_DIR/$UBUNTU_UPSTART_CONF_FILE
+initctl reload-configuration #reload the init config
 
 #do we want to predownload bootstrap.dat
 read -r -p "Do you want to download the bootstrap.dat file? If you choose yes your initial blockhain sync will most likely be faster but will take up some extra space on your hard drive (Y/N) " ANSWER
@@ -90,9 +87,9 @@ echo
 if [[ $ANSWER =~ ^([yY])$ ]]
 then
 	echo "Downloading bootstrap.dat, this can take a moment"
-	wget --progress=bar:force $BOOTSTRAP_DL_LOCATION -P $HOME/.litecoin
+	wget $BOOTSTRAP_DL_LOCATION -P $HOME/.newyorkcoin
 fi
 
-#start litecoin daemon
-echo "Starting litecoind"
-systemctl start litecoind.service
+#start newyorkcoin daemon
+echo "Starting newyorkcoind"
+start newyorkcoind

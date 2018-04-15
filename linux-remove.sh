@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #load global variables file
-wget -q https://raw.githubusercontent.com/litecoin-association/LitecoinNode/master/glob-vars.sh -P /root
+wget -q https://raw.githubusercontent.com/NewYorkCoin-NYC/NewYorkCoinNode/master/glob-vars.sh -P /root
 source /root/glob-vars.sh
 rm -f -v /root/glob-vars.sh
 
@@ -16,7 +16,7 @@ echo "Welcome to the Litecoin node remove script."
 echo "This script will remove the Litecoin full node from your computer."
 echo "We will ask you some questions do determine what we need to do."
 echo "To start the removal select your Linux distribution from the menu."
-echo "For more information or help visit http://litecoinnode.org"
+echo "For more information or help visit http://newyorkcoinnode.org"
 echo ""
 echo "-----------------------------------------------------------------------"
 echo ""

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #load global variables file
-wget -q https://raw.githubusercontent.com/litecoin-association/LitecoinNode/master/glob-vars.sh -P /root
+wget -q https://raw.githubusercontent.com/NewYorkCoin-NYC/NewYorkCoinNode/master/glob-vars.sh -P /root
 source /root/glob-vars.sh
 rm -f -v /root/glob-vars.sh
 
@@ -13,11 +13,11 @@ echo ""
 echo "-----------------------------------------------------------------------"
 echo "version = $LITECOIN_VER_NO_BIT"
 echo ""
-echo "Welcome to the litecoinnode.org Litecoin full node script for Linux."
+echo "Welcome to the newyorkcoinnode.org Litecoin full node script for Linux."
 echo "This script will install, update or remove a Litecoin full node."
 echo "We will ask you some questions do determine what we need to do."
 echo "To start please select an option from the menu below."
-echo "For more information or help visit http://litecoinnode.org"
+echo "For more information or help visit http://newyorkcoinnode.org"
 echo ""
 echo "-----------------------------------------------------------------------"
 echo ""

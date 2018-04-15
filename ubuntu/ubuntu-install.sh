@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #load global variables file
-wget -q https://raw.githubusercontent.com/litecoin-association/LitecoinNode/master/glob-vars.sh -P /root
+wget -q https://raw.githubusercontent.com/NewYorkCoin-NYC/NewYorkCoinNode/master/glob-vars.sh -P /root
 source /root/glob-vars.sh
 rm -f -v /root/glob-vars.sh
 
@@ -27,9 +27,9 @@ read -r -p "Do you want to install Litecoin? (Y/N) " ANSWER
 echo
 if [[ $ANSWER =~ ^([yY])$ ]]
 then
-	wget $UBUNTU_BASE/$DIST-install-litecoin.sh -P $HOME
-	source $HOME/$DIST-install-litecoin.sh
-	rm -f -v $HOME/$DIST-install-litecoin.sh
+	wget $UBUNTU_BASE/$DIST-install-newyorkcoin.sh -P $HOME
+	source $HOME/$DIST-install-newyorkcoin.sh
+	rm -f -v $HOME/$DIST-install-newyorkcoin.sh
 
 		read -r -p "Do you want to install the Litecoin automatic update script? (Y/N) " ANSWER
 		echo

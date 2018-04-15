@@ -1,35 +1,35 @@
 #!/bin/bash
 
-#stop the litecoin daemon
+#stop the newyorkcoin daemon
 echo "Stop Litecoind to make sure it does not lock any files"
-systemctl stop litecoind.service
+systemctl stop newyorkcoind.service
 
 #remove the systemd script
-echo "Removing the litecoind systemd script"
-systemctl disable litecoind.service #reload the systemd startup config
+echo "Removing the newyorkcoind systemd script"
+systemctl disable newyorkcoind.service #reload the systemd startup config
 rm -r -f -v $RASPBIAN_SYSTEMD_CONF_DIR/$RASPBIAN_SYSTEMD_CONF_FILE
 
-#remove the litecoind user account and group
-echo "Removing the litecoind user and group"
+#remove the newyorkcoind user account and group
+echo "Removing the newyorkcoind user and group"
 userdel $LITECOIND_USER
 groupdel $LITECOIND_GROUP
 
-#check if the litecoin-node-status.py script exists and remove it if true
-NODESTATUS_FILE="$HOME/scripts/litecoin-node-status.py"
+#check if the newyorkcoin-node-status.py script exists and remove it if true
+NODESTATUS_FILE="$HOME/scripts/newyorkcoin-node-status.py"
 
 if [ -f "$NODESTATUS_FILE" ]
 then
-	#Remove the litecoin-node-status.py file
-	echo "Removing the litecoin node status file"
+	#Remove the newyorkcoin-node-status.py file
+	echo "Removing the newyorkcoin node status file"
 	rm -f -v $NODESTATUS_FILE
 
-	#remove litecoin-node-status.py from cron
-	echo "Removing litecoin node status script from cron"
+	#remove newyorkcoin-node-status.py from cron
+	echo "Removing newyorkcoin node status script from cron"
 	crontab -l > $HOME/scripts/crontempfile
-	sed -i '/litecoin-node-status.py/d' $HOME/scripts/crontempfile
+	sed -i '/newyorkcoin-node-status.py/d' $HOME/scripts/crontempfile
 	crontab $HOME/scripts/crontempfile
 	rm $HOME/scripts/crontempfile
-	pip uninstall python-bitcoinrpc -y #remove python-bitcoinrpc as it is no longer useful without litecoind running
+	pip uninstall python-bitcoinrpc -y #remove python-bitcoinrpc as it is no longer useful without newyorkcoind running
 fi
 
 #check if the raspbian-update.sh script exists and remove it if true
@@ -50,27 +50,27 @@ then
 	rm $HOME/scripts/crontempfile
 fi
 
-#Below we check if the wallet.dat file exists in /home/litecoind/.litecoin. The project specifically lets litecoind run with the --disable wallet option so a wallet.dat
-#should not exist in /home/litecoind/.litecoin but if it does for whatever reason we should back it up just in case
+#Below we check if the wallet.dat file exists in /home/newyorkcoind/.newyorkcoin. The project specifically lets newyorkcoind run with the --disable wallet option so a wallet.dat
+#should not exist in /home/newyorkcoind/.newyorkcoin but if it does for whatever reason we should back it up just in case
 
 #check if the wallet file exists and back it up if true
-WALLET_FILE="$HOME/.litecoin/wallet.dat"
+WALLET_FILE="$HOME/.newyorkcoin/wallet.dat"
 
 if [ -f "$WALLET_FILE" ]
 then
         #backup the wallet file
-        echo "Backing up the wallet.dat file to /root/backup/litecoind"
-        mkdir -p /root/backup/litecoind
-        mv -v $WALLET_FILE /root/backup/litecoind/wallet.dat
+        echo "Backing up the wallet.dat file to /root/backup/newyorkcoind"
+        mkdir -p /root/backup/newyorkcoind
+        mv -v $WALLET_FILE /root/backup/newyorkcoind/wallet.dat
 fi
 
-#remove litecoin specific firewall rules
+#remove newyorkcoin specific firewall rules
 echo "Removing firewall rules."
 ufw delete allow 9333/tcp
 iptables -D INPUT -p tcp --syn --dport 9333 -m connlimit --connlimit-above 8 --connlimit-mask 24 -j REJECT --reject-with tcp-reset
 iptables -D INPUT -p tcp --syn --dport 9333 -m connlimit --connlimit-above 2 -j REJECT --reject-with tcp-reset
 iptables -D INPUT -m state --state NEW -m tcp -p tcp --dport 9333 -j ACCEPT
 
-#remove litecoind home directory
-echo "Removing the litecoind home directory."
+#remove newyorkcoind home directory
+echo "Removing the newyorkcoind home directory."
 rm -r -f -v $LITECOIND_HOME_DIR

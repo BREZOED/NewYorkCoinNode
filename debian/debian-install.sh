@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #load global variables file
-wget --progress=bar:force -q https://raw.githubusercontent.com/litecoin-association/LitecoinNode/master/glob-vars.sh -P /root
+wget --progress=bar:force -q https://raw.githubusercontent.com/NewYorkCoin-NYC/NewYorkCoinNode/master/glob-vars.sh -P /root
 source /root/glob-vars.sh
 rm -f -v /root/glob-vars.sh
 
@@ -27,26 +27,26 @@ read -r -p "Do you want to install Litecoin? (Y/N) " ANSWER
 echo
 if [[ $ANSWER =~ ^([yY])$ ]]
 then
-	wget --progress=bar:force $DEBIAN_BASE/$DIST-install-litecoin.sh -P $HOME
-	source $HOME/$DIST-install-litecoin.sh
-	rm -f -v $HOME/$DIST-install-litecoin.sh
-	
+	wget --progress=bar:force $DEBIAN_BASE/$DIST-install-newyorkcoin.sh -P $HOME
+	source $HOME/$DIST-install-newyorkcoin.sh
+	rm -f -v $HOME/$DIST-install-newyorkcoin.sh
+
 		read -r -p "Do you want to install the Litecoin automatic update script? (Y/N) " ANSWER
 		echo
 		if [[ $ANSWER =~ ^([yY])$ ]]
 		then
-		
+
 			read -r -p "WARNING: Automatically running untrusted code from the internet can be dangerous, are you sure you want to continue? (Y/N) " ANSWER
 			echo
 			if [[ $ANSWER =~ ^([yY])$ ]]
 			then
-			
+
 				#download the update script
 				echo "Downloading the update script."
 				wget --progress=bar:force $DEBIAN_BASE/$DIST-update.sh -P $HOME/scripts
 				chmod -R 0700 $HOME/scripts/$DIST-update.sh
 				chown -R root:root $HOME/scripts/$DIST-update.sh
-				
+
 				#download the version file
 				echo "Downloading the version file."
 				wget --progress=bar:force $SCRIPT_DL_URL/shared/version -P $HOME/scripts
