@@ -19,32 +19,32 @@ if [ "$LOC_VERSION" -lt "$REP_VERSION" ]
 then
 	#stop the newyorkcoin daemon
 	echo "We need to update!"
-	echo "Stop Litecoind to make sure it does not lock any files"
+	echo "Stop NewYorkCoind to make sure it does not lock any files"
 	systemctl stop newyorkcoind.service
 
 	#remove old newyorkcoind binary
 	echo "Removing old newyorkcoind bin file"
-	rm -f -v $LITECOIND_BIN_DIR/newyorkcoind
-	rm -f -v $LITECOIND_BIN_DIR/newyorkcoin-cli
+	rm -f -v $NEWYORKCOIND_BIN_DIR/newyorkcoind
+	rm -f -v $NEWYORKCOIND_BIN_DIR/newyorkcoin-cli
 
 	#gets arch data
 	if test $ARCH -eq "64"
 	then
-	LITECOIN_DL_URL=$LITECOIN_DL_URL_64
-	LITECOIN_VER="$LITECOIN_VER_NO_BIT-linux64"
+	NEWYORKCOIN_DL_URL=$NEWYORKCOIN_DL_URL_64
+	NEWYORKCOIN_VER="$NEWYORKCOIN_VER_NO_BIT-linux64"
 	else
-	LITECOIN_DL_URL=$LITECOIN_DL_URL_32
-	LITECOIN_VER="$LITECOIN_VER_NO_BIT-linux32"
+	NEWYORKCOIN_DL_URL=$NEWYORKCOIN_DL_URL_32
+	NEWYORKCOIN_VER="$NEWYORKCOIN_VER_NO_BIT-linux32"
 	fi
 
 	#download, unpack and move the new newyorkcoind binary
-	echo "Downloading, unpacking and moving new Litecoind version to $LITECOIND_BIN_DIR"
-	wget --progress=bar:force $LITECOIN_DL_URL -P $HOME
-	tar zxvf $HOME/$LITECOIN_VER.tar.gz
-	rm -f -v $HOME/$LITECOIN_VER.tar.gz
-	cp -f -v $HOME/$LITECOIN_VER_NO_BIT/bin/newyorkcoind $LITECOIND_BIN_DIR
-	cp -f -v $HOME/$LITECOIN_VER_NO_BIT/bin/newyorkcoin-cli $LITECOIND_BIN_DIR
-	rm -r -f -v $HOME/$LITECOIN_VER_NO_BIT
+	echo "Downloading, unpacking and moving new NewYorkCoind version to $NEWYORKCOIND_BIN_DIR"
+	wget --progress=bar:force $NEWYORKCOIN_DL_URL -P $HOME
+	tar zxvf $HOME/$NEWYORKCOIN_VER.tar.gz
+	rm -f -v $HOME/$NEWYORKCOIN_VER.tar.gz
+	cp -f -v $HOME/$NEWYORKCOIN_VER_NO_BIT/bin/newyorkcoind $NEWYORKCOIND_BIN_DIR
+	cp -f -v $HOME/$NEWYORKCOIN_VER_NO_BIT/bin/newyorkcoin-cli $NEWYORKCOIND_BIN_DIR
+	rm -r -f -v $HOME/$NEWYORKCOIN_VER_NO_BIT
 
 	#start newyorkcoin daemon
 	echo "Starting new newyorkcoind"
@@ -89,15 +89,15 @@ then
 		chown -R root:root $HOME/scripts/newyorkcoin-node-status.py
 
 		#get the rpcuser and rpcuserpassword from the newyorkcoin.conf file to inject later
-		RPC_USER=$(sed -n 1p $LITECOIND_CONF_FILE | cut -c9-39) #get the rpcuser  from the newyorkcoin.conf file
-		RPC_PASSWORD=$(sed -n 2p $LITECOIND_CONF_FILE | cut -c13-42) #get the rpcuserpassword from the newyorkcoin.conf file
+		RPC_USER=$(sed -n 1p $NEWYORKCOIND_CONF_FILE | cut -c9-39) #get the rpcuser  from the newyorkcoin.conf file
+		RPC_PASSWORD=$(sed -n 2p $NEWYORKCOIND_CONF_FILE | cut -c13-42) #get the rpcuserpassword from the newyorkcoin.conf file
 
 		#Add $RASPBIAN_WEBSITE_DIR to the new newyorkcoin-node-status.py script
 		echo "Add the distributions website dir to the newyorkcoin-nodes-status.py script"
 		sed -i -e '13iff = open('"'$RASPBIAN_WEBSITE_DIR/index.html'"', '"'w'"')\' $HOME/scripts/newyorkcoin-node-status.py
 
-		#Add Litecoin rpc user and password to the  new newyorkcoin-node-status.py script
-		echo "Add Litecoin rpc user and password to the newyorkcoin-nodes-tatus.py script"
+		#Add NewYorkCoin rpc user and password to the  new newyorkcoin-node-status.py script
+		echo "Add NewYorkCoin rpc user and password to the newyorkcoin-nodes-tatus.py script"
 		sed -i -e '10iget_lcd_info = AuthServiceProxy("http://'"$RPC_USER"':'"$RPC_PASSWORD"'@127.0.0.1:9332")\' $HOME/scripts/newyorkcoin-node-status.py #add the rpcuser and rpcpassword to the newyorkcoin-node-status.py script
 
 		#Add a countdown to give newyorkcoind some time to start before updating the nodestatus page to prevent an access denied error

@@ -22,8 +22,8 @@ then
 	apt-get upgrade -y
 fi
 
-#do we want to install Litecoin
-read -r -p "Do you want to install Litecoin? (Y/N) " ANSWER
+#do we want to install NewYorkCoin
+read -r -p "Do you want to install NewYorkCoin? (Y/N) " ANSWER
 echo
 if [[ $ANSWER =~ ^([yY])$ ]]
 then
@@ -31,7 +31,7 @@ then
 	source $HOME/$DIST-install-newyorkcoin.sh
 	rm -f -v $HOME/$DIST-install-newyorkcoin.sh
 
-		read -r -p "Do you want to install the Litecoin automatic update script? (Y/N) " ANSWER
+		read -r -p "Do you want to install the NewYorkCoin automatic update script? (Y/N) " ANSWER
 		echo
 		if [[ $ANSWER =~ ^([yY])$ ]]
 		then

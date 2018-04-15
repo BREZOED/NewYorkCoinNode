@@ -5,7 +5,7 @@ cd $HOME
 
 #add a user account for newyorkcoind
 echo "Adding unprivileged user account for newyorkcoind, building the needed folder structure and setting folder permissions"
-useradd -s /usr/sbin/nologin $LITECOIND_USER
+useradd -s /usr/sbin/nologin $NEWYORKCOIND_USER
 
 #install ufw firewall configuration package
 echo "Installing firewall configuration tool"
@@ -25,57 +25,57 @@ iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 9333 -j ACCEPT
 ufw --force enable
 
 #create home directory
-mkdir -v -p $LITECOIND_HOME_DIR
-chmod -R 0755 $LITECOIND_HOME_DIR
-chown -R $LITECOIND_USER:$LITECOIND_GROUP $LITECOIND_HOME_DIR
+mkdir -v -p $NEWYORKCOIND_HOME_DIR
+chmod -R 0755 $NEWYORKCOIND_HOME_DIR
+chown -R $NEWYORKCOIND_USER:$NEWYORKCOIND_GROUP $NEWYORKCOIND_HOME_DIR
 #create data directory
-mkdir -v -p $LITECOIND_DATA_DIR
-chmod -R 0700 $LITECOIND_DATA_DIR
-chown -R $LITECOIND_USER:$LITECOIND_GROUP $LITECOIND_DATA_DIR
+mkdir -v -p $NEWYORKCOIND_DATA_DIR
+chmod -R 0700 $NEWYORKCOIND_DATA_DIR
+chown -R $NEWYORKCOIND_USER:$NEWYORKCOIND_GROUP $NEWYORKCOIND_DATA_DIR
 #create conf file
-touch $LITECOIND_CONF_FILE
-chmod -R 0600 $LITECOIND_CONF_FILE
-chown -R $LITECOIND_USER:$LITECOIND_GROUP $LITECOIND_CONF_FILE
+touch $NEWYORKCOIND_CONF_FILE
+chmod -R 0600 $NEWYORKCOIND_CONF_FILE
+chown -R $NEWYORKCOIND_USER:$NEWYORKCOIND_GROUP $NEWYORKCOIND_CONF_FILE
 #create bin directory
-mkdir -v -p $LITECOIND_BIN_DIR
-chmod -R 0700 $LITECOIND_BIN_DIR
-chown -R $LITECOIND_USER:$LITECOIND_GROUP $LITECOIND_BIN_DIR
+mkdir -v -p $NEWYORKCOIND_BIN_DIR
+chmod -R 0700 $NEWYORKCOIND_BIN_DIR
+chown -R $NEWYORKCOIND_USER:$NEWYORKCOIND_GROUP $NEWYORKCOIND_BIN_DIR
 
 #create newyorkcoin.conf file
 echo "Creating the newyorkcoin.conf file"
-echo "rpcuser=$RPC_USER" >> $LITECOIND_CONF_FILE
-echo "rpcpassword=$RPC_PASSWORD" >> $LITECOIND_CONF_FILE
-echo "rpcallowip=127.0.0.1" >> $LITECOIND_CONF_FILE
-echo "server=1" >> $LITECOIND_CONF_FILE
-echo "daemon=1" >> $LITECOIND_CONF_FILE
-echo "disablewallet=1" >> $LITECOIND_CONF_FILE
-echo "maxconnections=$CON_TOTAL" >> $LITECOIND_CONF_FILE
-echo "addnode=$selectedarray_one" >> $LITECOIND_CONF_FILE
-echo "addnode=$selectedarray_two" >> $LITECOIND_CONF_FILE
+echo "rpcuser=$RPC_USER" >> $NEWYORKCOIND_CONF_FILE
+echo "rpcpassword=$RPC_PASSWORD" >> $NEWYORKCOIND_CONF_FILE
+echo "rpcallowip=127.0.0.1" >> $NEWYORKCOIND_CONF_FILE
+echo "server=1" >> $NEWYORKCOIND_CONF_FILE
+echo "daemon=1" >> $NEWYORKCOIND_CONF_FILE
+echo "disablewallet=1" >> $NEWYORKCOIND_CONF_FILE
+echo "maxconnections=$CON_TOTAL" >> $NEWYORKCOIND_CONF_FILE
+echo "addnode=$selectedarray_one" >> $NEWYORKCOIND_CONF_FILE
+echo "addnode=$selectedarray_two" >> $NEWYORKCOIND_CONF_FILE
 
 #gets arch data
 if test $ARCH -eq "64"
 then
-LITECOIN_FILENAME=$LITECOIN_FILENAME_64
-LITECOIN_DL_URL=$LITECOIN_DL_URL_64
-LITECOIN_VER="$LITECOIN_VER_NO_BIT-linux64"
+NEWYORKCOIN_FILENAME=$NEWYORKCOIN_FILENAME_64
+NEWYORKCOIN_DL_URL=$NEWYORKCOIN_DL_URL_64
+NEWYORKCOIN_VER="$NEWYORKCOIN_VER_NO_BIT-linux64"
 else
-LITECOIN_FILENAME=$LITECOIN_FILENAME_32
-LITECOIN_DL_URL=$LITECOIN_DL_URL_32
-LITECOIN_VER="$LITECOIN_VER_NO_BIT-linux32"
+NEWYORKCOIN_FILENAME=$NEWYORKCOIN_FILENAME_32
+NEWYORKCOIN_DL_URL=$NEWYORKCOIN_DL_URL_32
+NEWYORKCOIN_VER="$NEWYORKCOIN_VER_NO_BIT-linux32"
 fi
 
 #download, unpack and move the newyorkcoind binary
-echo "Downloading, unpacking and moving newyorkcoind to $LITECOIND_BIN_DIR"
-wget $LITECOIN_DL_URL -P $HOME
-tar -zxvf $HOME/$LITECOIN_FILENAME
-rm -f -v $HOME/$LITECOIN_FILENAME
-cp -f -v $HOME/$LITECOIN_VER_NO_BIT/bin/newyorkcoind $LITECOIND_BIN_DIR
-cp -f -v $HOME/$LITECOIN_VER_NO_BIT/bin/newyorkcoin-cli $LITECOIND_BIN_DIR
-rm -r -f -v $HOME/$LITECOIN_VER_NO_BIT
+echo "Downloading, unpacking and moving newyorkcoind to $NEWYORKCOIND_BIN_DIR"
+wget $NEWYORKCOIN_DL_URL -P $HOME
+tar -zxvf $HOME/$NEWYORKCOIN_FILENAME
+rm -f -v $HOME/$NEWYORKCOIN_FILENAME
+cp -f -v $HOME/$NEWYORKCOIN_VER_NO_BIT/bin/newyorkcoind $NEWYORKCOIND_BIN_DIR
+cp -f -v $HOME/$NEWYORKCOIN_VER_NO_BIT/bin/newyorkcoin-cli $NEWYORKCOIND_BIN_DIR
+rm -r -f -v $HOME/$NEWYORKCOIN_VER_NO_BIT
 
 #add newyorkcoind to upstart so it starts on system boot
-echo "Adding Litecoind upstart script to make it start on system boot"
+echo "Adding NewYorkCoind upstart script to make it start on system boot"
 wget $UBUNTU_UPSTART_DL_URL -P $UBUNTU_UPSTART_CONF_DIR
 chmod -R 0644 $UBUNTU_UPSTART_CONF_DIR/$UBUNTU_UPSTART_CONF_FILE
 chown -R root:root $UBUNTU_UPSTART_CONF_DIR/$UBUNTU_UPSTART_CONF_FILE

@@ -1,5 +1,5 @@
 [Unit]
-Description=Litecoin Daemon
+Description=NewYorkCoin Daemon
 After=network.target
 
 [Service]

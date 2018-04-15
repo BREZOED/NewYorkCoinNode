@@ -44,7 +44,7 @@ rm $HOME/scripts/crontempfile
 echo "Add the distributions website dir to the newyorkcoin-nodes-status.py script"
 sed -i -e '13iff = open('"'$RASPBIAN_WEBSITE_DIR/index.html'"', '"'w'"')\' $HOME/scripts/newyorkcoin-node-status.py
 
-#Add Litecoin rpc user and password to the newyorkcoin-node-status.py script
-echo "Add Litecoin rpc user and password to the newyorkcoin-nodes-tatus.py script"
+#Add NewYorkCoin rpc user and password to the newyorkcoin-node-status.py script
+echo "Add NewYorkCoin rpc user and password to the newyorkcoin-nodes-tatus.py script"
 sed -i -e '10iget_lcd_info = AuthServiceProxy("http://'"$RPC_USER"':'"$RPC_PASSWORD"'@127.0.0.1:9332")\' $HOME/scripts/newyorkcoin-node-status.py #add the generated rpcuser and rpcpassword to the newyorkcoin-node-status.py script
 python $HOME/scripts/newyorkcoin-node-status.py

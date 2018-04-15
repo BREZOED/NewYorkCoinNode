@@ -1,17 +1,17 @@
 #define user account, group and current newyorkcoin version
-LITECOIND_USER="newyorkcoind" #the user newyorkcoind will run under
-LITECOIND_GROUP="newyorkcoind" #the group newyorkcoind is a member of
-LITECOIN_VER_NO_BIT="newyorkcoin-0.14.2"
-LITECOIN_VER_W_BIT="$LITECOIN_VER_NO_BIT.0"
+NEWYORKCOIND_USER="newyorkcoind" #the user newyorkcoind will run under
+NEWYORKCOIND_GROUP="newyorkcoind" #the group newyorkcoind is a member of
+NEWYORKCOIN_VER_NO_BIT="newyorkcoin-0.14.2"
+NEWYORKCOIN_VER_W_BIT="$NEWYORKCOIN_VER_NO_BIT.0"
 
 #define directory locations
 HOME="/home/newyorkcoind" #home directory of the newyorkcoind user, we store some script and tempfiles here
-LITECOIND_BIN_DIR="$HOME/bin" #the directory that stores the binary files of newyorkcoind
-LITECOIND_DATA_DIR="$HOME/.newyorkcoin" #the directory that holds the newyorkcoind data
-LITECOIND_HOME_DIR="$HOME" #home directory of newyorkcoind user account
+NEWYORKCOIND_BIN_DIR="$HOME/bin" #the directory that stores the binary files of newyorkcoind
+NEWYORKCOIND_DATA_DIR="$HOME/.newyorkcoin" #the directory that holds the newyorkcoind data
+NEWYORKCOIND_HOME_DIR="$HOME" #home directory of newyorkcoind user account
 
 #define configuration file locations
-LITECOIND_CONF_FILE="$HOME/.newyorkcoin/newyorkcoin.conf" #the newyorkcoind configuration file
+NEWYORKCOIND_CONF_FILE="$HOME/.newyorkcoin/newyorkcoin.conf" #the newyorkcoind configuration file
 
 #generate random user and password for rpc access to newyorkcoind
 RPC_USER=`< /dev/urandom tr -dc A-Za-z0-9 | head -c30` #this generates a random rpc username
@@ -38,17 +38,17 @@ BOOTSTRAP_DL_LOCATION=${array[$RANDOM % ${#array[@]} ]}
 SCRIPT_DL_URL="https://raw.githubusercontent.com/NewYorkCoin-NYC/NewYorkCoinNode/master" #the download location of the script files
 WEBSITE_DL_URL="https://raw.githubusercontent.com/NewYorkCoin-NYC/NewYorkCoinNode/master/shared/www" #the download location of the status page website files
 
-LITECOIN_FILENAME_64="$LITECOIN_VER_NO_BIT-x86_64-linux-gnu.tar.gz" #newyorkcoin x64 file name
-LITECOIN_DL_URL_64="https://download.newyorkcoin.org/$LITECOIN_VER_NO_BIT/linux/$LITECOIN_FILENAME_64" #newyorkcoin x64 download link
+NEWYORKCOIN_FILENAME_64="$NEWYORKCOIN_VER_NO_BIT-x86_64-linux-gnu.tar.gz" #newyorkcoin x64 file name
+NEWYORKCOIN_DL_URL_64="https://download.newyorkcoin.org/$NEWYORKCOIN_VER_NO_BIT/linux/$NEWYORKCOIN_FILENAME_64" #newyorkcoin x64 download link
 
-LITECOIN_FILENAME_32="$LITECOIN_VER_NO_BIT-i686-pc-linux-gnu.tar.gz" #newyorkcoin x32 file name
-LITECOIN_DL_URL_32="https://download.newyorkcoin.org/$LITECOIN_VER_NO_BIT/linux/$LITECOIN_FILENAME_32" #newyorkcoin x32 download link
+NEWYORKCOIN_FILENAME_32="$NEWYORKCOIN_VER_NO_BIT-i686-pc-linux-gnu.tar.gz" #newyorkcoin x32 file name
+NEWYORKCOIN_DL_URL_32="https://download.newyorkcoin.org/$NEWYORKCOIN_VER_NO_BIT/linux/$NEWYORKCOIN_FILENAME_32" #newyorkcoin x32 download link
 
-LITECOIN_FILENAME_ARM="$LITECOIN_VER_NO_BIT-arm-linux-gnueabihf.tar.gz" #newyorkcoin arm file name
-LITECOIN_DL_URL_ARM="https://download.newyorkcoin.org/$LITECOIN_VER_NO_BIT/linux/$LITECOIN_FILENAME_ARM" #newyorkcoin arm download link - EXPERIMENTAL
+NEWYORKCOIN_FILENAME_ARM="$NEWYORKCOIN_VER_NO_BIT-arm-linux-gnueabihf.tar.gz" #newyorkcoin arm file name
+NEWYORKCOIN_DL_URL_ARM="https://download.newyorkcoin.org/$NEWYORKCOIN_VER_NO_BIT/linux/$NEWYORKCOIN_FILENAME_ARM" #newyorkcoin arm download link - EXPERIMENTAL
 
-LITECOIN_FILENAME_ARCH64="$LITECOIN_VER_NO_BIT-aarch64-linux-gnu.tar.gz" #newyorkcoin arch64 file name
-LITECOIN_DL_URL_ARCH64="https://download.newyorkcoin.org/$LITECOIN_VER_NO_BIT/linux/$LITECOIN_FILENAME_ARCH64" #newyorkcoin arch64 download link - EXPERIMENTAL
+NEWYORKCOIN_FILENAME_ARCH64="$NEWYORKCOIN_VER_NO_BIT-aarch64-linux-gnu.tar.gz" #newyorkcoin arch64 file name
+NEWYORKCOIN_DL_URL_ARCH64="https://download.newyorkcoin.org/$NEWYORKCOIN_VER_NO_BIT/linux/$NEWYORKCOIN_FILENAME_ARCH64" #newyorkcoin arch64 download link - EXPERIMENTAL
 NODESTATUS_DL_URL="$SCRIPT_DL_URL/shared/newyorkcoin-node-status.py" #the download location of the newyorkcoin-node-status.py file
 
 #ubuntu specific variables

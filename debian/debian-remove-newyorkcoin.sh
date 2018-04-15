@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #stop the newyorkcoin daemon
-echo "Stop Litecoind to make sure it does not lock any files"
+echo "Stop NewYorkCoind to make sure it does not lock any files"
 systemctl stop newyorkcoind.service
 
 #remove the systemd script
@@ -11,8 +11,8 @@ rm -r -f -v $DEBIAN_SYSTEMD_CONF_DIR/$DEBIAN_SYSTEMD_CONF_FILE
 
 #remove the newyorkcoind user account and group
 echo "Removing the newyorkcoind user and group"
-userdel $LITECOIND_USER
-groupdel $LITECOIND_GROUP
+userdel $NEWYORKCOIND_USER
+groupdel $NEWYORKCOIND_GROUP
 
 #check if the newyorkcoin-node-status.py script exists and remove it if true
 NODESTATUS_FILE="$HOME/scripts/newyorkcoin-node-status.py"
@@ -73,4 +73,4 @@ iptables -D INPUT -m state --state NEW -m tcp -p tcp --dport 9333 -j ACCEPT
 
 #remove newyorkcoind home directory
 echo "Removing the newyorkcoind home directory."
-rm -r -f -v $LITECOIND_HOME_DIR
+rm -r -f -v $NEWYORKCOIND_HOME_DIR

@@ -11,10 +11,10 @@ clear
 
 echo ""
 echo "-----------------------------------------------------------------------"
-echo "version = $LITECOIN_VER_NO_BIT"
+echo "version = $NEWYORKCOIN_VER_NO_BIT"
 echo ""
-echo "Welcome to the newyorkcoinnode.org Litecoin full node script for Linux."
-echo "This script will install, update or remove a Litecoin full node."
+echo "Welcome to the newyorkcoinnode.org NewYorkCoin full node script for Linux."
+echo "This script will install, update or remove a NewYorkCoin full node."
 echo "We will ask you some questions do determine what we need to do."
 echo "To start please select an option from the menu below."
 echo "For more information or help visit http://newyorkcoinnode.org"

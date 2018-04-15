@@ -9,7 +9,7 @@ rm -f -v /root/glob-vars.sh
 cd $HOME
 
 #do we want to remove newyorkcoin
-read -r -p "Do you want to remove Litecoin? (Y/N) " ANSWER
+read -r -p "Do you want to remove NewYorkCoin? (Y/N) " ANSWER
 echo
 if [[ $ANSWER =~ ^([yY])$ ]]
 then

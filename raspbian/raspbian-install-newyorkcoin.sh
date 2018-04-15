@@ -5,7 +5,7 @@ cd $HOME
 
 #add a user account for newyorkcoind
 echo "Adding unprivileged user account for newyorkcoind, building the needed folder structure and setting folder permissions"
-useradd -s /usr/sbin/nologin $LITECOIND_USER
+useradd -s /usr/sbin/nologin $NEWYORKCOIND_USER
 
 #install ufw firewall configuration package
 echo "Installing firewall configuration tool"
@@ -21,36 +21,36 @@ iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 9333 -j ACCEPT
 ufw --force enable
 
 #create home directory
-mkdir -v -p $LITECOIND_HOME_DIR
-chmod -R 0755 $LITECOIND_HOME_DIR
-chown -R $LITECOIND_USER:$LITECOIND_GROUP $LITECOIND_HOME_DIR
+mkdir -v -p $NEWYORKCOIND_HOME_DIR
+chmod -R 0755 $NEWYORKCOIND_HOME_DIR
+chown -R $NEWYORKCOIND_USER:$NEWYORKCOIND_GROUP $NEWYORKCOIND_HOME_DIR
 #create data directory
-mkdir -v -p $LITECOIND_DATA_DIR
-chmod -R 0700 $LITECOIND_DATA_DIR
-chown -R $LITECOIND_USER:$LITECOIND_GROUP $LITECOIND_DATA_DIR
+mkdir -v -p $NEWYORKCOIND_DATA_DIR
+chmod -R 0700 $NEWYORKCOIND_DATA_DIR
+chown -R $NEWYORKCOIND_USER:$NEWYORKCOIND_GROUP $NEWYORKCOIND_DATA_DIR
 #create conf file
-touch $LITECOIND_CONF_FILE
-chmod -R 0600 $LITECOIND_CONF_FILE
-chown -R $LITECOIND_USER:$LITECOIND_GROUP $LITECOIND_CONF_FILE
+touch $NEWYORKCOIND_CONF_FILE
+chmod -R 0600 $NEWYORKCOIND_CONF_FILE
+chown -R $NEWYORKCOIND_USER:$NEWYORKCOIND_GROUP $NEWYORKCOIND_CONF_FILE
 #create bin directory
-mkdir -v -p $LITECOIND_BIN_DIR
-chmod -R 0700 $LITECOIND_BIN_DIR
-chown -R $LITECOIND_USER:$LITECOIND_GROUP $LITECOIND_BIN_DIR
+mkdir -v -p $NEWYORKCOIND_BIN_DIR
+chmod -R 0700 $NEWYORKCOIND_BIN_DIR
+chown -R $NEWYORKCOIND_USER:$NEWYORKCOIND_GROUP $NEWYORKCOIND_BIN_DIR
 
 #create newyorkcoin.conf file
 echo "Creating the newyorkcoin.conf file"
-echo "rpcuser=$RPC_USER" >> $LITECOIND_CONF_FILE
-echo "rpcpassword=$RPC_PASSWORD" >> $LITECOIND_CONF_FILE
-echo "rpcallowip=127.0.0.1" >> $LITECOIND_CONF_FILE
-echo "server=1" >> $LITECOIND_CONF_FILE
-echo "daemon=1" >> $LITECOIND_CONF_FILE
-echo "disablewallet=1" >> $LITECOIND_CONF_FILE
-echo "maxconnections=$CON_TOTAL" >> $LITECOIND_CONF_FILE
-echo "addnode=$selectedarray_one" >> $LITECOIND_CONF_FILE
-echo "addnode=$selectedarray_two" >> $LITECOIND_CONF_FILE
+echo "rpcuser=$RPC_USER" >> $NEWYORKCOIND_CONF_FILE
+echo "rpcpassword=$RPC_PASSWORD" >> $NEWYORKCOIND_CONF_FILE
+echo "rpcallowip=127.0.0.1" >> $NEWYORKCOIND_CONF_FILE
+echo "server=1" >> $NEWYORKCOIND_CONF_FILE
+echo "daemon=1" >> $NEWYORKCOIND_CONF_FILE
+echo "disablewallet=1" >> $NEWYORKCOIND_CONF_FILE
+echo "maxconnections=$CON_TOTAL" >> $NEWYORKCOIND_CONF_FILE
+echo "addnode=$selectedarray_one" >> $NEWYORKCOIND_CONF_FILE
+echo "addnode=$selectedarray_two" >> $NEWYORKCOIND_CONF_FILE
 
 #setup dependencies
-echo "Installing dependencies required for building Litecoin"
+echo "Installing dependencies required for building NewYorkCoin"
 sudo apt-get install autoconf libtool libssl-dev libboost-all-dev libminiupnpc-dev -y
 sudo apt-get install qt4-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev -y
 
@@ -63,7 +63,7 @@ make -j2
 sudo make install
 
 #build newyorkcoind
-echo "Building Litecoin"
+echo "Building NewYorkCoin"
 cd ..
 git clone https://github.com/newyorkcoin-project/newyorkcoin.git
 cd newyorkcoin/
@@ -73,12 +73,12 @@ make -j2
 sudo make install
 
 #Move the already built newyorkcoind binary
-echo "Moving newyorkcoind to $LITECOIND_BIN_DIR"
-cp -f -v newyorkcoind $LITECOIND_BIN_DIR
-cp -f -v newyorkcoin-cli $LITECOIND_BIN_DIR
+echo "Moving newyorkcoind to $NEWYORKCOIND_BIN_DIR"
+cp -f -v newyorkcoind $NEWYORKCOIND_BIN_DIR
+cp -f -v newyorkcoin-cli $NEWYORKCOIND_BIN_DIR
 
 #add newyorkcoind to systemd so it starts on system boot
-echo "Adding Litecoind systemd script to make it start on system boot"
+echo "Adding NewYorkCoind systemd script to make it start on system boot"
 wget --progress=bar:force $RASPBIAN_SYSTEMD_DL_URL -P $RASPBIAN_SYSTEMD_CONF_DIR
 chmod -R 0644 $RASPBIAN_SYSTEMD_CONF_DIR/$RASPBIAN_SYSTEMD_CONF_FILE
 chown -R root:root $RASPBIAN_SYSTEMD_CONF_DIR/$RASPBIAN_SYSTEMD_CONF_FILE
