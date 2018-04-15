@@ -56,4 +56,4 @@ Please do not run scripts from the internet without reviewing them first! Always
 
 ## Any errors?
 
-Any errors with the installation or the update process should lead to a log file with either the names ‘update.log’ or ‘install.log’ - if there is something wrong, please visit our [GitHub] (https://github.com/newyorkcoin-association/NewYorkCoinNode) and create an issue attached with the corresponding log file. Don’t hesitate to report any errors you encounter.
+Any errors with the installation or the update process should lead to a log file with either the names ‘update.log’ or ‘install.log’ - if there is something wrong, please visit our [GitHub] (https://github.com/NewYorkCoin-NYC/NewYorkCoinNode) and create an issue attached with the corresponding log file. Don’t hesitate to report any errors you encounter.
